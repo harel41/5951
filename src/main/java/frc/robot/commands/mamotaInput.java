@@ -11,6 +11,8 @@ public class MamotaInput extends CommandBase {
 
     public MamotaInput() {
         mamota = Mamota.getinstance();
+        addRequirements(mamota);
+
     }
 
     // Called when the command is initially scheduled.

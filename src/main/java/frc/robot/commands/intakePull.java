@@ -10,6 +10,8 @@ public class IntakePull extends CommandBase {
 
   public IntakePull(){
     intake = Intake.getinstance();
+    addRequirements(intake);
+
   }
 
   // Called when the command is initially scheduled.

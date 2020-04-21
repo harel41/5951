@@ -9,6 +9,8 @@ public class IntakePiston extends CommandBase {
 
   public IntakePiston() {
     intake = Intake.getinstance();
+    addRequirements(intake);
+
   }
 @Override
     public void initialize() {
