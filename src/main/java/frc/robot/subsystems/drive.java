@@ -8,14 +8,14 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class drive extends SubsystemBase {
-  public static drive drive;
+public class Drive extends SubsystemBase {
+  public static Drive drive;
   CANSparkMax Spark1;
   CANSparkMax Spark2;
   CANSparkMax Spark3;
   CANSparkMax Spark4;
 
-  public drive() {
+  public Drive() {
     Spark1 = new CANSparkMax(1,MotorType.kBrushless);
     Spark2 = new CANSparkMax(2,MotorType.kBrushless);
     Spark3 = new CANSparkMax(3,MotorType.kBrushless);
@@ -38,9 +38,9 @@ public class drive extends SubsystemBase {
 
 
 
-  public static drive getinstance() {
+  public static Drive getinstance() {
     if (drive == null) {
-      drive = new drive();
+      drive = new Drive();
     }
     return drive;
   }

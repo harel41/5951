@@ -5,27 +5,24 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.climbCommend;
-import frc.robot.commands.intakePull;
-import frc.robot.commands.mamotaInput;
-import frc.robot.commands.mamotaOutput;
-import frc.robot.subsystems.climb;
-import frc.robot.subsystems.intake;
-import frc.robot.subsystems.mamota;
+import frc.robot.commands.ClimbCommend;
+import frc.robot.commands.IntakeMove;
+import frc.robot.commands.IntakePiston;
+import frc.robot.commands.IntakePull;
+import frc.robot.commands.MamotaInput;
+import frc.robot.commands.MamotaOutput;
 
 public class RobotContainer {
 
-  public static Joystick leftJoystick = new Joystick(1);
-  public static Joystick righJoystick = new Joystick(2);
-  public static XboxController xbox = new XboxController(1);
-  public static JoystickButton aButton = new JoystickButton(xbox, 1);
-  public static JoystickButton bButton = new JoystickButton(xbox, 2);
-  public static Joystick intakeJoystick = new Joystick(1);
-  public static JoystickButton gButton = new JoystickButton(xbox, 4);
-  public static JoystickButton yButton = new JoystickButton(xbox, 5);
-  public static JoystickButton cButton = new JoystickButton(xbox, 6);
-  public static Joystick elevatorJoystick = new Joystick(3);
-
+  public static Joystick Left_Joystick = new Joystick(0);
+  public static Joystick Right_Joystick = new Joystick(1);
+  public static XboxController Operator_Joystick = new XboxController(2);
+  public static JoystickButton aButton = new JoystickButton(Operator_Joystick, 1);
+  public static JoystickButton yButton = new JoystickButton(Operator_Joystick, 2);
+  public static JoystickButton xButton = new JoystickButton(Operator_Joystick, 3);
+  public static JoystickButton bButton = new JoystickButton(Operator_Joystick, 4);
+  public static JoystickButton rbButton = new JoystickButton(Operator_Joystick, 5);
+  public static JoystickButton lbButton = new JoystickButton(Operator_Joystick, 6);
 
   public RobotContainer() {
 
@@ -33,11 +30,12 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    aButton.whenPressed(new mamotaOutput(mamota.getinstance()));
-    bButton.whenPressed(new mamotaInput(mamota.getinstance()));
-    gButton.whenPressed(new intakePull(intake.getinstance()));
-    yButton.whenPressed(new climbCommend(climb.getinstance()));
-    cButton.whenPressed(new climbCommend(climb.getinstance()));
+    aButton.whileHeld(new MamotaInput());
+    yButton.whileHeld(new MamotaOutput());
+    xButton.whileHeld(new IntakePull());
+    bButton.whenPressed(new IntakePiston());
+    rbButton.whenPressed(new ClimbCommend());
+    lbButton.whileHeld(new IntakeMove());
   }
 
 

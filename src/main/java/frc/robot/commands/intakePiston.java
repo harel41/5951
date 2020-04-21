@@ -1,19 +1,35 @@
 package frc.robot.commands;
 
-import frc.robot.subsystems.intake;
+import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class intakePiston extends CommandBase {
+public class IntakePiston extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private intake intake;
+  private Intake intake;
 
-  public intakePiston(intake subsystem) {
-    intake = subsystem;
-    addRequirements(subsystem);
+  public IntakePiston() {
+    intake = Intake.getinstance();
   }
-  @Override
+@Override
     public void initialize() {
         intake.pistonFire(!intake.getPiston());
+  }
+  
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+    public void execute() {
+    }
+
+     // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {
+  }
+
+  
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
+    return false;
   }
 }
 

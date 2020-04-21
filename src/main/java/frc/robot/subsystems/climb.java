@@ -5,29 +5,33 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class climb extends SubsystemBase {
-  public static climb climb;
-  DoubleSolenoid dSolenoid;
+public class Climb extends SubsystemBase {
+  public static Climb climb;
+  public DoubleSolenoid sPiston;
 
-  public climb() {
-    dSolenoid = new DoubleSolenoid(1, 2);
+  public Climb() {
+    sPiston = new DoubleSolenoid(1, 2);
 
   }
 
-  public void extend() {
-    dSolenoid.set(Value.kForward);
+  public void pistonFor() {
+    sPiston.set(Value.kForward);
   }
 
-  public void extract() {
-    dSolenoid.set(Value.kReverse);
+  public void pistonRev() {
+    sPiston.set(Value.kReverse);
   }
 
-  public static climb getinstance() {
+  public static Climb getinstance() {
     if (climb == null) {
-      climb = new climb();
+      climb = new Climb();
     }
     return climb;
   }
+
+  
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
 }
-
-
+}
