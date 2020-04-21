@@ -1,37 +1,34 @@
 package frc.robot.commands;
+
 import frc.robot.subsystems.Climb;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+/**
+ * An example command that uses an example subsystem.
+ */
 public class ClimbCommend extends CommandBase {
-    @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
-    private Climb climb;
+  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  Climb climb;
+  /**
+   * Creates a new ExampleCommand.
+   *
+   * @param subsystem The subsystem used by this command.
+   */
 
   public ClimbCommend() {
     climb = Climb.getinstance();
     addRequirements(climb);
   }
-  
+
+  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     if (climb.sPiston.get() == Value.kForward){
-      climb.pistonRev();
+      climb.pistonFor();
   }
   else{
-      climb.pistonFor();
+      climb.pistonRev();
    }
   }
-  @Override
-  public void execute() {}
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-  }
-  
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
 }
-

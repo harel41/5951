@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ClimbCommend;
 import frc.robot.commands.IntakeMove;
+import frc.robot.commands.IntakeMoveRev;
 import frc.robot.commands.IntakePiston;
 import frc.robot.commands.IntakePull;
 import frc.robot.commands.MamotaInput;
@@ -23,6 +24,7 @@ public class RobotContainer {
   public static JoystickButton bButton = new JoystickButton(Operator_Joystick, 4);
   public static JoystickButton rbButton = new JoystickButton(Operator_Joystick, 5);
   public static JoystickButton lbButton = new JoystickButton(Operator_Joystick, 6);
+  public static JoystickButton rfButton = new JoystickButton(Operator_Joystick, 7);
 
   public RobotContainer() {
 
@@ -36,6 +38,8 @@ public class RobotContainer {
     bButton.whenPressed(new IntakePiston());
     rbButton.whenPressed(new ClimbCommend());
     lbButton.whileHeld(new IntakeMove());
+    rfButton.whileHeld(new IntakeMoveRev());
+
   }
 
 

@@ -31,6 +31,9 @@ public class DriveCommend extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+      drive.right(0);
+      drive.left(0);
+
     }
 
       // Returns true when the command should end.
