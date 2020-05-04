@@ -28,7 +28,7 @@ public class IntakeMove extends CommandBase {
       // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.IntakeMove(0);
+    intake.moveIntake(0);
   }
 
   // Returns true when the command should end.
