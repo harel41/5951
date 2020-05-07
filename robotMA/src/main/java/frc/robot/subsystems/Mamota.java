@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import edu.wpi.first.wpiutil.math.MathUtil;
+
 
 
 public class Mamota extends SubsystemBase {
@@ -70,11 +72,13 @@ public class Mamota extends SubsystemBase {
   public double getDistance(){
     return encoder.getDistance();
   }
-
+  public int getEncoder() { 
+    return encoder.get();
+  }
 
   //PID Functions
-  public double anglePID(double setpoint){
-    return pid.calculate(getDistance() * -1 , setpoint);
+  public double encoderPID(double setpoint){
+    return pid.calculate(MathUtil.clamp(encoder.get(), -1, 1), setpoint);
   }
 
   //Limit Switch Functions
@@ -93,7 +97,7 @@ public class Mamota extends SubsystemBase {
 
     SmartDashboard.putBoolean("Limit Switch Status: ", getLimitswitch());
 
-    if(mamota.getLimitswitch() == true){
+    if(mamota.getLimitswitch()){
       mamota.resetEncoder();
     }
   }

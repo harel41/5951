@@ -1,7 +1,6 @@
 
 package frc.robot.subsystems;
 
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
@@ -14,6 +13,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
@@ -95,9 +95,9 @@ public class Intake extends SubsystemBase {
     return IntakeMoveA.getSensorCollection().isFwdLimitSwitchClosed();
   }
 
-  // PID Functions
-  public double anglePID (double setpoint){
-    return pid.calculate(getDistance() *-1, setpoint);
+  //PID Functions
+  public double encoderPID(double setpoint){
+    return pid.calculate(MathUtil.clamp(encoder.get(), -1, 1), setpoint);
   }
 
   @Override
@@ -105,7 +105,7 @@ public class Intake extends SubsystemBase {
     SmartDashboard.putNumber("Encoder Distance: ", getDistance());
     SmartDashboard.putBoolean("Limit Switch Status: ", getLimitSwitch());
 
-    if(intake.getLimitSwitch() == true){
+    if(intake.getLimitSwitch()){
       intake.resetEncoder();
     }
   }

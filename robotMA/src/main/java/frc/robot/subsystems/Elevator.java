@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpiutil.math.MathUtil;
 
 public class Elevator extends SubsystemBase {
     public static Elevator elevator;
@@ -67,16 +68,16 @@ public class Elevator extends SubsystemBase {
   }
 
   //PID Functions
-  public double getEncoderPID(double setpoint){
-    return pid.calculate(getDistance(), setpoint);
+  public double encoderPID(double setpoint){
+    return pid.calculate(MathUtil.clamp(encoder.get(), -1, 1), setpoint);
   }
-
+  
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Encoder Distance: ", getDistance());
     SmartDashboard.putBoolean("Limit Switch Status: ", getLimitSwitch());
 
-    if(getLimitSwitch() == true){
+    if(getLimitSwitch()){
       resetEncoder();
     }
 }
