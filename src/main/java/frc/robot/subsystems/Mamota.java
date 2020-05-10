@@ -20,18 +20,18 @@ public class Mamota extends SubsystemBase {
   public static Mamota mamota ;
 
   // Motors
-  WPI_TalonSRX MamotaMove;
-  WPI_VictorSPX MamotaInput;
+  private WPI_TalonSRX MamotaMove;
+  private WPI_VictorSPX MamotaInput;
 
   // Indecators
-  Encoder encoder;
+  private Encoder encoder;
   
     //PID
-  PIDController pid; 
+    private PIDController pid; 
 
-  double Mamota_KP = 1;
-  double Mamota_KI = 1;
-  double Mamota_KD = 1;
+  private static final double Mamota_KP = 1;
+  private static final double Mamota_KI = 1;
+  private static final double Mamota_KD = 1;
 
   private Mamota() {
     MamotaMove = new WPI_TalonSRX(Constants.MamotaMovePort);
@@ -69,16 +69,16 @@ public class Mamota extends SubsystemBase {
   public void resetEncoder(){
     encoder.reset();
   }
-  public double getDistance(){
+  public double getEncoder(){
     return encoder.getDistance();
-  }
-  public int getEncoder() { 
-    return encoder.get();
   }
 
   //PID Functions
   public double encoderPID(double setpoint){
-    return pid.calculate(MathUtil.clamp(encoder.get(), -1, 1), setpoint);
+    return pid.calculate(MathUtil.clamp(getEncoder(), -1, 1), setpoint);
+  }
+  public boolean PIDatSetpoint(){
+    return pid.atSetpoint();
   }
 
   //Limit Switch Functions
@@ -93,8 +93,7 @@ public class Mamota extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Encoder Distance: ",getDistance());
-
+    SmartDashboard.putNumber("Encoder Distance: ",getEncoder());
     SmartDashboard.putBoolean("Limit Switch Status: ", getLimitswitch());
 
     if(mamota.getLimitswitch()){

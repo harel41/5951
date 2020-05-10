@@ -4,6 +4,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -42,7 +43,12 @@ public class Drive extends SubsystemBase {
   public void right(double power){
     M_RightUp.set(power);
   }
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
 
+    SmartDashboard.putNumber("left power:", M_LeftUp.get());
+    SmartDashboard.putNumber("right power:", M_RightUp.get());
+  }
 }
-
 

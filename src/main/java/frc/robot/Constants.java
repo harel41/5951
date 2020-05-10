@@ -39,4 +39,8 @@ public final class Constants {
 
     public static int ElevatorEncoderAPort = 4;
     public static int ElevatorEncoderBPort = 5;
+
+    public static int DoubleSolenoidFoward = 0;
+    public static int DoubleSolenoidReverse = 1;
+
 }

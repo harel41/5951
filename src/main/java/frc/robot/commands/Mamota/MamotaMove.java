@@ -1,9 +1,8 @@
 
-
 package frc.robot.commands;
 
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Mamota;
 
@@ -26,9 +25,12 @@ public class MamotaMove extends CommandBase {
 
   @Override
   public void execute() {
-    mamota.move(RobotContainer.Operator_Joystick.getRawAxis(1));
-  }
-
+    mamota.move(MathUtil.clamp(mamota.encoderPID(RobotContainer.Operator_Joystick.getRawAxis(1)), -1, 1));
+    
+      if(mamota.getMotorCurrnet() > 1){
+        new MamotaInput();
+      }
+    }
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {

@@ -16,15 +16,15 @@ import edu.wpi.first.wpiutil.math.MathUtil;
 public class Elevator extends SubsystemBase {
     public static Elevator elevator;
 
-    WPI_TalonSRX ElevatorMotor;
+    private WPI_TalonSRX ElevatorMotor;
 
-    Encoder encoder;
+    private Encoder encoder;
 
-    PIDController pid;
+    private PIDController pid;
 
-   double Elevator_KP = 1;
-   double Elevator_KI = 1;
-   double Elevator_KD = 1;
+    private static final double Elevator_KP = 1;
+    private static final double Elevator_KI = 1;
+    private static final double Elevator_KD = 1;
 
     public Elevator() {
         ElevatorMotor = new WPI_TalonSRX(Constants.ElevatorMotorPort);
@@ -38,6 +38,7 @@ public class Elevator extends SubsystemBase {
 
     // Create New PID Object
     pid = new PIDController(Elevator_KP, Elevator_KI, Elevator_KD);
+    pid.setTolerance(1);
 
     }
 
@@ -69,8 +70,11 @@ public class Elevator extends SubsystemBase {
 
   //PID Functions
   public double encoderPID(double setpoint){
-    return pid.calculate(MathUtil.clamp(encoder.get(), -1, 1), setpoint);
+    return pid.calculate(MathUtil.clamp(getDistance(), -1, 1), setpoint);
   }
+  public boolean PIDatSetpoint(){
+    return pid.atSetpoint();
+  } 
   
   @Override
   public void periodic() {

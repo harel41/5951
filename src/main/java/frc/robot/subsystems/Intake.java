@@ -21,19 +21,19 @@ public class Intake extends SubsystemBase {
   public static Intake intake;
 
   //* Motors And Piston
-  Solenoid IntakePiston;
-  WPI_TalonSRX IntakeMoveA;
-  WPI_TalonSRX IntakeMoveB;
-  WPI_VictorSPX IntakeMotor;
+   private Solenoid IntakePiston;
+   private WPI_TalonSRX IntakeMoveA;
+   private WPI_TalonSRX IntakeMoveB;
+   private  WPI_VictorSPX IntakeMotor;
 
-  Encoder encoder;
+   private Encoder encoder;
 
-  PIDController pid;
+   private PIDController pid;
 
 
-  double Intake_KP = 1;
-  double Intake_KI = 1;
-  double Intake_KD = 1;
+  private static final double Intake_KP = 1;
+  private static final double Intake_KI = 1;
+  private static final double Intake_KD = 1;
 
   private Intake() {
     IntakePiston = new Solenoid(1);
@@ -65,8 +65,8 @@ public class Intake extends SubsystemBase {
 
   }
 
-  public void pistonFire(boolean t) {
-    IntakePiston.set(t);
+  public void pistonFire(boolean state) {
+    IntakePiston.set(state);
   }
 
   public boolean getPiston() {
@@ -97,9 +97,11 @@ public class Intake extends SubsystemBase {
 
   //PID Functions
   public double encoderPID(double setpoint){
-    return pid.calculate(MathUtil.clamp(encoder.get(), -1, 1), setpoint);
+    return pid.calculate(MathUtil.clamp(getDistance(), -1, 1), setpoint);
   }
-
+  public boolean PIDatSetpoint(){
+    return pid.atSetpoint();
+  }
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Encoder Distance: ", getDistance());

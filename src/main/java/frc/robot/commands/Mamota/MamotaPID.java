@@ -1,51 +1,56 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Mamota;
 
 
 /**
  * An example command that uses an example subsystem.
  */
-public class IntakePID extends CommandBase {
+public class MamotaPID extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  public Intake intake;
-  private double PIDsetpoint;
-
-  /**
-   * Creates a new ExampleCommand.
-   *
-   * @param subsystem The subsystem used by this command.
-   */
-
-  public IntakePID() {
-    intake = Intake.getinstance();
+  private Mamota mamota;
+  private double lastTimeOnTarget;
+  private double waitTime;
+  private double setPoint;
+  
+  
+  public MamotaPID(double setPoint, double waitTime) {
+    mamota = Mamota.getinstance();
+    this.setPoint = setPoint;
+    this.waitTime = waitTime;
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(intake);
+    addRequirements(mamota);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-      PIDsetpoint = intake.getDistance();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.moveIntake(intake.encoderPID(PIDsetpoint));      
+    mamota.move(mamota.encoderPID(setPoint));
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    mamota.move(0);
+
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if(!mamota.PIDatSetpoint()){
+      lastTimeOnTarget = Timer.getFPGATimestamp();
+    }
+    return mamota.PIDatSetpoint() && Timer.getFPGATimestamp() - lastTimeOnTarget > waitTime;
   }
+
 }
